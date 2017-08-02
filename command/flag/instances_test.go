@@ -10,6 +10,7 @@ import (
 
 var _ = Describe("Instances", func() {
 	var instances Instances
+
 	BeforeEach(func() {
 		instances = Instances{}
 	})
