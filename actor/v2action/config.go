@@ -15,4 +15,6 @@ type Config interface {
 	UnsetOrganizationInformation()
 	UnsetSpaceInformation()
 	Verbose() (bool, []string)
+	SSHOauthClient() string
+	RefreshToken() string
 }

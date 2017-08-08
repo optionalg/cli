@@ -682,6 +682,24 @@ type FakeCloudControllerClient struct {
 		result1 ccv2.Warnings
 		result2 error
 	}
+	AppSSHEndpointStub        func() string
+	appSSHEndpointMutex       sync.RWMutex
+	appSSHEndpointArgsForCall []struct{}
+	appSSHEndpointReturns     struct {
+		result1 string
+	}
+	appSSHEndpointReturnsOnCall map[int]struct {
+		result1 string
+	}
+	AppSSHHostKeyFingerprintStub        func() string
+	appSSHHostKeyFingerprintMutex       sync.RWMutex
+	appSSHHostKeyFingerprintArgsForCall []struct{}
+	appSSHHostKeyFingerprintReturns     struct {
+		result1 string
+	}
+	appSSHHostKeyFingerprintReturnsOnCall map[int]struct {
+		result1 string
+	}
 	UpdateApplicationStub        func(app ccv2.Application) (ccv2.Application, ccv2.Warnings, error)
 	updateApplicationMutex       sync.RWMutex
 	updateApplicationArgsForCall []struct {
@@ -3291,6 +3309,86 @@ func (fake *FakeCloudControllerClient) TargetCFReturnsOnCall(i int, result1 ccv2
 	}{result1, result2}
 }
 
+func (fake *FakeCloudControllerClient) AppSSHEndpoint() string {
+	fake.appSSHEndpointMutex.Lock()
+	ret, specificReturn := fake.appSSHEndpointReturnsOnCall[len(fake.appSSHEndpointArgsForCall)]
+	fake.appSSHEndpointArgsForCall = append(fake.appSSHEndpointArgsForCall, struct{}{})
+	fake.recordInvocation("AppSSHEndpoint", []interface{}{})
+	fake.appSSHEndpointMutex.Unlock()
+	if fake.AppSSHEndpointStub != nil {
+		return fake.AppSSHEndpointStub()
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	return fake.appSSHEndpointReturns.result1
+}
+
+func (fake *FakeCloudControllerClient) AppSSHEndpointCallCount() int {
+	fake.appSSHEndpointMutex.RLock()
+	defer fake.appSSHEndpointMutex.RUnlock()
+	return len(fake.appSSHEndpointArgsForCall)
+}
+
+func (fake *FakeCloudControllerClient) AppSSHEndpointReturns(result1 string) {
+	fake.AppSSHEndpointStub = nil
+	fake.appSSHEndpointReturns = struct {
+		result1 string
+	}{result1}
+}
+
+func (fake *FakeCloudControllerClient) AppSSHEndpointReturnsOnCall(i int, result1 string) {
+	fake.AppSSHEndpointStub = nil
+	if fake.appSSHEndpointReturnsOnCall == nil {
+		fake.appSSHEndpointReturnsOnCall = make(map[int]struct {
+			result1 string
+		})
+	}
+	fake.appSSHEndpointReturnsOnCall[i] = struct {
+		result1 string
+	}{result1}
+}
+
+func (fake *FakeCloudControllerClient) AppSSHHostKeyFingerprint() string {
+	fake.appSSHHostKeyFingerprintMutex.Lock()
+	ret, specificReturn := fake.appSSHHostKeyFingerprintReturnsOnCall[len(fake.appSSHHostKeyFingerprintArgsForCall)]
+	fake.appSSHHostKeyFingerprintArgsForCall = append(fake.appSSHHostKeyFingerprintArgsForCall, struct{}{})
+	fake.recordInvocation("AppSSHHostKeyFingerprint", []interface{}{})
+	fake.appSSHHostKeyFingerprintMutex.Unlock()
+	if fake.AppSSHHostKeyFingerprintStub != nil {
+		return fake.AppSSHHostKeyFingerprintStub()
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	return fake.appSSHHostKeyFingerprintReturns.result1
+}
+
+func (fake *FakeCloudControllerClient) AppSSHHostKeyFingerprintCallCount() int {
+	fake.appSSHHostKeyFingerprintMutex.RLock()
+	defer fake.appSSHHostKeyFingerprintMutex.RUnlock()
+	return len(fake.appSSHHostKeyFingerprintArgsForCall)
+}
+
+func (fake *FakeCloudControllerClient) AppSSHHostKeyFingerprintReturns(result1 string) {
+	fake.AppSSHHostKeyFingerprintStub = nil
+	fake.appSSHHostKeyFingerprintReturns = struct {
+		result1 string
+	}{result1}
+}
+
+func (fake *FakeCloudControllerClient) AppSSHHostKeyFingerprintReturnsOnCall(i int, result1 string) {
+	fake.AppSSHHostKeyFingerprintStub = nil
+	if fake.appSSHHostKeyFingerprintReturnsOnCall == nil {
+		fake.appSSHHostKeyFingerprintReturnsOnCall = make(map[int]struct {
+			result1 string
+		})
+	}
+	fake.appSSHHostKeyFingerprintReturnsOnCall[i] = struct {
+		result1 string
+	}{result1}
+}
+
 func (fake *FakeCloudControllerClient) UpdateApplication(app ccv2.Application) (ccv2.Application, ccv2.Warnings, error) {
 	fake.updateApplicationMutex.Lock()
 	ret, specificReturn := fake.updateApplicationReturnsOnCall[len(fake.updateApplicationArgsForCall)]
@@ -3834,6 +3932,10 @@ func (fake *FakeCloudControllerClient) Invocations() map[string][][]interface{} 
 	defer fake.resourceMatchMutex.RUnlock()
 	fake.targetCFMutex.RLock()
 	defer fake.targetCFMutex.RUnlock()
+	fake.appSSHEndpointMutex.RLock()
+	defer fake.appSSHEndpointMutex.RUnlock()
+	fake.appSSHHostKeyFingerprintMutex.RLock()
+	defer fake.appSSHHostKeyFingerprintMutex.RUnlock()
 	fake.updateApplicationMutex.RLock()
 	defer fake.updateApplicationMutex.RUnlock()
 	fake.restageApplicationMutex.RLock()

@@ -31,7 +31,12 @@ func NewConnection(skipSSLValidation bool, dialTimeout time.Duration) *UAAConnec
 	}
 
 	return &UAAConnection{
-		HTTPClient: &http.Client{Transport: tr},
+		HTTPClient: &http.Client{
+			Transport: tr,
+			CheckRedirect: func(_ *http.Request, _ []*http.Request) error {
+				return http.ErrUseLastResponse
+			},
+		},
 	}
 }
 
@@ -67,6 +72,10 @@ func (connection *UAAConnection) processRequestErrors(request *http.Request, err
 
 func (connection *UAAConnection) populateResponse(response *http.Response, passedResponse *Response) error {
 	passedResponse.HTTPResponse = response
+
+	if resourceLocationURL := response.Header.Get("Location"); resourceLocationURL != "" {
+		passedResponse.ResourceLocationURL = resourceLocationURL
+	}
 
 	rawBytes, err := ioutil.ReadAll(response.Body)
 	defer response.Body.Close()

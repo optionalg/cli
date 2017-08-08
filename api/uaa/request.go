@@ -10,6 +10,12 @@ import (
 
 // RequestOptions contains all the options to create an HTTP Request.
 type requestOptions struct {
+	// URI is the URI of the request.
+	URI string
+
+	// Method is the HTTP method of the request.
+	Method string
+
 	// Header is the set of request headers
 	Header http.Header
 

@@ -90,6 +90,8 @@ type Client struct {
 	minCLIVersion             string
 	routingEndpoint           string
 	tokenEndpoint             string
+	appSSHEndpoint            string
+	appSSHHostKeyFingerprint  string
 
 	jobPollingInterval time.Duration
 	jobPollingTimeout  time.Duration

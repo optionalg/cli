@@ -2,6 +2,7 @@ package wrapper
 
 import (
 	"bytes"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -69,7 +70,7 @@ func (t *UAAAuthentication) Make(request *http.Request, passedResponse *uaa.Resp
 		}
 	}
 
-	request.Header.Set("Authorization", t.cache.AccessToken())
+	request.Header.Set("Authorization", fmt.Sprintf("bearer %s", t.cache.AccessToken()))
 
 	err = t.connection.Make(request, passedResponse)
 	if _, ok := err.(uaa.InvalidAuthTokenError); ok {

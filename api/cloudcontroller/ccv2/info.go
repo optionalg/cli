@@ -16,6 +16,8 @@ type APIInformation struct {
 	Name                         string `json:"name"`
 	RoutingEndpoint              string `json:"routing_endpoint"`
 	TokenEndpoint                string `json:"token_endpoint"`
+	AppSSHEndpoint               string `json:"app_ssh_endpoint"`
+	AppSSHHostKeyFingerprint     string `json:"app_ssh_host_key_fingerprint"`
 }
 
 // API returns the Cloud Controller API URL for the targeted Cloud Controller.
@@ -56,6 +58,14 @@ func (client *Client) RoutingEndpoint() string {
 // TokenEndpoint returns the Token endpoint for the targeted Cloud Controller.
 func (client *Client) TokenEndpoint() string {
 	return client.tokenEndpoint
+}
+
+func (client *Client) AppSSHEndpoint() string {
+	return client.appSSHEndpoint
+}
+
+func (client *Client) AppSSHHostKeyFingerprint() string {
+	return client.appSSHHostKeyFingerprint
 }
 
 // Info returns back endpoint and API information from /v2/info.

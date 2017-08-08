@@ -356,6 +356,15 @@ type FakeConfig struct {
 	writePluginConfigReturnsOnCall map[int]struct {
 		result1 error
 	}
+	SSHOauthClientStub        func() string
+	sSHOauthClientMutex       sync.RWMutex
+	sSHOauthClientArgsForCall []struct{}
+	sSHOauthClientReturns     struct {
+		result1 string
+	}
+	sSHOauthClientReturnsOnCall map[int]struct {
+		result1 string
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
@@ -1849,6 +1858,46 @@ func (fake *FakeConfig) WritePluginConfigReturnsOnCall(i int, result1 error) {
 	}{result1}
 }
 
+func (fake *FakeConfig) SSHOauthClient() string {
+	fake.sSHOauthClientMutex.Lock()
+	ret, specificReturn := fake.sSHOauthClientReturnsOnCall[len(fake.sSHOauthClientArgsForCall)]
+	fake.sSHOauthClientArgsForCall = append(fake.sSHOauthClientArgsForCall, struct{}{})
+	fake.recordInvocation("SSHOauthClient", []interface{}{})
+	fake.sSHOauthClientMutex.Unlock()
+	if fake.SSHOauthClientStub != nil {
+		return fake.SSHOauthClientStub()
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	return fake.sSHOauthClientReturns.result1
+}
+
+func (fake *FakeConfig) SSHOauthClientCallCount() int {
+	fake.sSHOauthClientMutex.RLock()
+	defer fake.sSHOauthClientMutex.RUnlock()
+	return len(fake.sSHOauthClientArgsForCall)
+}
+
+func (fake *FakeConfig) SSHOauthClientReturns(result1 string) {
+	fake.SSHOauthClientStub = nil
+	fake.sSHOauthClientReturns = struct {
+		result1 string
+	}{result1}
+}
+
+func (fake *FakeConfig) SSHOauthClientReturnsOnCall(i int, result1 string) {
+	fake.SSHOauthClientStub = nil
+	if fake.sSHOauthClientReturnsOnCall == nil {
+		fake.sSHOauthClientReturnsOnCall = make(map[int]struct {
+			result1 string
+		})
+	}
+	fake.sSHOauthClientReturnsOnCall[i] = struct {
+		result1 string
+	}{result1}
+}
+
 func (fake *FakeConfig) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
@@ -1934,6 +1983,8 @@ func (fake *FakeConfig) Invocations() map[string][][]interface{} {
 	defer fake.verboseMutex.RUnlock()
 	fake.writePluginConfigMutex.RLock()
 	defer fake.writePluginConfigMutex.RUnlock()
+	fake.sSHOauthClientMutex.RLock()
+	defer fake.sSHOauthClientMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

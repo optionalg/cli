@@ -51,4 +51,5 @@ type Config interface {
 	UnsetSpaceInformation()
 	Verbose() (bool, []string)
 	WritePluginConfig() error
+	SSHOauthClient() string
 }

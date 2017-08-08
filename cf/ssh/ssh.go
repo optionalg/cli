@@ -19,7 +19,6 @@ import (
 
 	"golang.org/x/crypto/ssh"
 
-	"code.cloudfoundry.org/cli/cf/models"
 	"code.cloudfoundry.org/cli/cf/ssh/options"
 	"code.cloudfoundry.org/cli/cf/ssh/sigwinch"
 	"code.cloudfoundry.org/cli/cf/ssh/terminal"
@@ -83,7 +82,9 @@ type secureShell struct {
 	terminalHelper         terminal.TerminalHelper
 	listenerFactory        ListenerFactory
 	keepAliveInterval      time.Duration
-	app                    models.Application
+	appState               string
+	processGUID            string
+	processOnDiego         bool
 	sshEndpointFingerprint string
 	sshEndpoint            string
 	token                  string
@@ -98,17 +99,21 @@ func NewSecureShell(
 	terminalHelper terminal.TerminalHelper,
 	listenerFactory ListenerFactory,
 	keepAliveInterval time.Duration,
-	app models.Application,
+	appState string,
+	processGUID string,
+	processOnDiego bool,
 	sshEndpointFingerprint string,
 	sshEndpoint string,
 	token string,
 ) SecureShell {
 	return &secureShell{
-		secureDialer:      secureDialer,
-		terminalHelper:    terminalHelper,
-		listenerFactory:   listenerFactory,
-		keepAliveInterval: keepAliveInterval,
-		app:               app,
+		secureDialer:           secureDialer,
+		terminalHelper:         terminalHelper,
+		listenerFactory:        listenerFactory,
+		keepAliveInterval:      keepAliveInterval,
+		appState:               appState,
+		processGUID:            processGUID,
+		processOnDiego:         processOnDiego,
 		sshEndpointFingerprint: sshEndpointFingerprint,
 		sshEndpoint:            sshEndpoint,
 		token:                  token,
@@ -123,7 +128,7 @@ func (c *secureShell) Connect(opts *options.SSHOptions) error {
 	}
 
 	clientConfig := &ssh.ClientConfig{
-		User: fmt.Sprintf("cf:%s/%d", c.app.GUID, opts.Index),
+		User: fmt.Sprintf("cf:%s/%d", c.processGUID, opts.Index),
 		Auth: []ssh.AuthMethod{
 			ssh.Password(c.token),
 		},
@@ -323,11 +328,11 @@ func (c *secureShell) Wait() error {
 }
 
 func (c *secureShell) validateTarget(opts *options.SSHOptions) error {
-	if strings.ToUpper(c.app.State) != "STARTED" {
+	if strings.ToUpper(c.appState) != "STARTED" {
 		return fmt.Errorf("Application %q is not in the STARTED state", opts.AppName)
 	}
 
-	if !c.app.Diego {
+	if !c.processOnDiego {
 		return fmt.Errorf("Application %q is not running on Diego", opts.AppName)
 	}
 

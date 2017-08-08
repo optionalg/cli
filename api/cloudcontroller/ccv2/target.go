@@ -54,6 +54,8 @@ func (client *Client) TargetCF(settings TargetSettings) (Warnings, error) {
 	client.minCLIVersion = info.MinCLIVersion
 	client.routingEndpoint = info.RoutingEndpoint
 	client.tokenEndpoint = info.TokenEndpoint
+	client.appSSHEndpoint = info.AppSSHEndpoint
+	client.appSSHHostKeyFingerprint = info.AppSSHHostKeyFingerprint
 
 	return warnings, nil
 }

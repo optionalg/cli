@@ -42,7 +42,7 @@ func NewSSHOptions(fc flags.FlagContext) (*SSHOptions, error) {
 
 	if fc.IsSet("L") {
 		for _, arg := range fc.StringSlice("L") {
-			forwardSpec, err := sshOptions.parseLocalForwardingSpec(arg)
+			forwardSpec, err := sshOptions.ParseLocalForwardingSpec(arg)
 			if err != nil {
 				return sshOptions, err
 			}
@@ -65,7 +65,7 @@ func NewSSHOptions(fc flags.FlagContext) (*SSHOptions, error) {
 	return sshOptions, nil
 }
 
-func (o *SSHOptions) parseLocalForwardingSpec(arg string) (*ForwardSpec, error) {
+func (o *SSHOptions) ParseLocalForwardingSpec(arg string) (*ForwardSpec, error) {
 	arg = strings.TrimSpace(arg)
 
 	parts := []string{}

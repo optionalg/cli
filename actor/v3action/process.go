@@ -11,6 +11,7 @@ import (
 
 // Process represents a V3 actor process.
 type Process struct {
+	GUID       string
 	Type       string
 	Instances  []Instance
 	MemoryInMB int

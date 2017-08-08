@@ -85,6 +85,7 @@ func (uaa UAARepository) Authorize(token string) (string, error) {
 
 	authorizeReq.Header.Add("authorization", token)
 
+	uaa.DumpRequest(authorizeReq)
 	resp, err := httpClient.Do(authorizeReq)
 	if resp != nil {
 		uaa.DumpResponse(resp)

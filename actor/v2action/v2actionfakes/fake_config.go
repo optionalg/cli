@@ -90,6 +90,24 @@ type FakeConfig struct {
 		result1 bool
 		result2 []string
 	}
+	SSHOauthClientStub        func() string
+	sSHOauthClientMutex       sync.RWMutex
+	sSHOauthClientArgsForCall []struct{}
+	sSHOauthClientReturns     struct {
+		result1 string
+	}
+	sSHOauthClientReturnsOnCall map[int]struct {
+		result1 string
+	}
+	RefreshTokenStub        func() string
+	refreshTokenMutex       sync.RWMutex
+	refreshTokenArgsForCall []struct{}
+	refreshTokenReturns     struct {
+		result1 string
+	}
+	refreshTokenReturnsOnCall map[int]struct {
+		result1 string
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
@@ -426,6 +444,86 @@ func (fake *FakeConfig) VerboseReturnsOnCall(i int, result1 bool, result2 []stri
 	}{result1, result2}
 }
 
+func (fake *FakeConfig) SSHOauthClient() string {
+	fake.sSHOauthClientMutex.Lock()
+	ret, specificReturn := fake.sSHOauthClientReturnsOnCall[len(fake.sSHOauthClientArgsForCall)]
+	fake.sSHOauthClientArgsForCall = append(fake.sSHOauthClientArgsForCall, struct{}{})
+	fake.recordInvocation("SSHOauthClient", []interface{}{})
+	fake.sSHOauthClientMutex.Unlock()
+	if fake.SSHOauthClientStub != nil {
+		return fake.SSHOauthClientStub()
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	return fake.sSHOauthClientReturns.result1
+}
+
+func (fake *FakeConfig) SSHOauthClientCallCount() int {
+	fake.sSHOauthClientMutex.RLock()
+	defer fake.sSHOauthClientMutex.RUnlock()
+	return len(fake.sSHOauthClientArgsForCall)
+}
+
+func (fake *FakeConfig) SSHOauthClientReturns(result1 string) {
+	fake.SSHOauthClientStub = nil
+	fake.sSHOauthClientReturns = struct {
+		result1 string
+	}{result1}
+}
+
+func (fake *FakeConfig) SSHOauthClientReturnsOnCall(i int, result1 string) {
+	fake.SSHOauthClientStub = nil
+	if fake.sSHOauthClientReturnsOnCall == nil {
+		fake.sSHOauthClientReturnsOnCall = make(map[int]struct {
+			result1 string
+		})
+	}
+	fake.sSHOauthClientReturnsOnCall[i] = struct {
+		result1 string
+	}{result1}
+}
+
+func (fake *FakeConfig) RefreshToken() string {
+	fake.refreshTokenMutex.Lock()
+	ret, specificReturn := fake.refreshTokenReturnsOnCall[len(fake.refreshTokenArgsForCall)]
+	fake.refreshTokenArgsForCall = append(fake.refreshTokenArgsForCall, struct{}{})
+	fake.recordInvocation("RefreshToken", []interface{}{})
+	fake.refreshTokenMutex.Unlock()
+	if fake.RefreshTokenStub != nil {
+		return fake.RefreshTokenStub()
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	return fake.refreshTokenReturns.result1
+}
+
+func (fake *FakeConfig) RefreshTokenCallCount() int {
+	fake.refreshTokenMutex.RLock()
+	defer fake.refreshTokenMutex.RUnlock()
+	return len(fake.refreshTokenArgsForCall)
+}
+
+func (fake *FakeConfig) RefreshTokenReturns(result1 string) {
+	fake.RefreshTokenStub = nil
+	fake.refreshTokenReturns = struct {
+		result1 string
+	}{result1}
+}
+
+func (fake *FakeConfig) RefreshTokenReturnsOnCall(i int, result1 string) {
+	fake.RefreshTokenStub = nil
+	if fake.refreshTokenReturnsOnCall == nil {
+		fake.refreshTokenReturnsOnCall = make(map[int]struct {
+			result1 string
+		})
+	}
+	fake.refreshTokenReturnsOnCall[i] = struct {
+		result1 string
+	}{result1}
+}
+
 func (fake *FakeConfig) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
@@ -449,6 +547,10 @@ func (fake *FakeConfig) Invocations() map[string][][]interface{} {
 	defer fake.unsetSpaceInformationMutex.RUnlock()
 	fake.verboseMutex.RLock()
 	defer fake.verboseMutex.RUnlock()
+	fake.sSHOauthClientMutex.RLock()
+	defer fake.sSHOauthClientMutex.RUnlock()
+	fake.refreshTokenMutex.RLock()
+	defer fake.refreshTokenMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

@@ -28,6 +28,7 @@ type commandList struct {
 	V3Stage          v3.V3StageCommand          `command:"v3-stage" description:"**EXPERIMENTAL** Create a new droplet for an app"`
 	V3Start          v3.V3StartCommand          `command:"v3-start" description:"Start an app"`
 	V3Stop           v3.V3StopCommand           `command:"v3-stop" description:"Stop an app"`
+	V3SSH            v3.V3SSHCommand            `command:"v3-ssh" description:"spike"`
 
 	AddPluginRepo                      plugin.AddPluginRepoCommand                  `command:"add-plugin-repo" description:"Add a new plugin repository"`
 	AllowSpaceSSH                      v2.AllowSpaceSSHCommand                      `command:"allow-space-ssh" description:"Allow SSH access for the space"`

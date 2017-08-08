@@ -68,6 +68,7 @@ func (actor Actor) getProcessesForApp(appGUID string) (Processes, Warnings, erro
 		}
 
 		process := Process{
+			GUID:       ccv3Process.GUID,
 			Type:       ccv3Process.Type,
 			Instances:  []Instance{},
 			MemoryInMB: ccv3Process.MemoryInMB,

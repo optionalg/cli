@@ -7,8 +7,9 @@ import (
 )
 
 const (
-	PostUserRequest       = "PostUser"
-	PostOAuthTokenRequest = "PostOAuthToken"
+	PostUserRequest          = "PostUser"
+	PostOAuthTokenRequest    = "PostOAuthToken"
+	GetOAuthAuthorizeRequest = "GetOathAuthorize"
 )
 
 // Routes is a list of routes used by the rata library to construct request
@@ -16,4 +17,5 @@ const (
 var Routes = rata.Routes{
 	{Path: "/Users", Method: http.MethodPost, Name: PostUserRequest},
 	{Path: "/oauth/token", Method: http.MethodPost, Name: PostOAuthTokenRequest},
+	{Path: "/oauth/authorize", Method: http.MethodGet, Name: GetOAuthAuthorizeRequest},
 }

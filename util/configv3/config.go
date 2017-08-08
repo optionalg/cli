@@ -332,6 +332,10 @@ func (config *Config) UAAOAuthClientSecret() string {
 	return config.ConfigFile.UAAOAuthClientSecret
 }
 
+func (config *Config) SSHOauthClient() string {
+	return config.ConfigFile.SSHOAuthClient
+}
+
 // APIVersion returns the CC API Version
 func (config *Config) APIVersion() string {
 	return config.ConfigFile.APIVersion
